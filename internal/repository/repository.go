@@ -15,18 +15,25 @@ type Cities interface {
 	AddCity(userId int, city ent.City) (int, error)
 	GetUsersCity(userId int) ([]ent.City, error)
 	GetAll() ([]ent.City, error)
-	// Delete(userId int, cityId int) error
+	DeleteCity(userId int, cityId int) error
+}
+
+type Weather interface {
+	AddWeather(cityId int, weather ent.Weather) (int, error)
+	GetWeather(cityId int) (ent.Weather, error)
 }
 
 type Repository struct {
 	Authorization
 	Cities
+	Weather
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
 		Cities:        NewCityPostrgres(db),
+		Weather:       NewWeatherPostgres(db),
 	}
 
 }

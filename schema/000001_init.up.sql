@@ -16,5 +16,6 @@ CREATE TABLE users_city
 (
     id serial not null unique,
     user_id int references users (id) on delete cascade not null,
-    city_id int references cityies (id) on delete cascade not null 
+    city_id int references cities (id) on delete cascade not null 
 );
+

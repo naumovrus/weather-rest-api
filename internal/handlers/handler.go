@@ -2,15 +2,17 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	weatherapi "github.com/naumovrus/weather-api/internal/pkg/weather_api"
 	"github.com/naumovrus/weather-api/internal/services"
 )
 
 type Handler struct {
-	services *services.Service
+	services   *services.Service
+	weatherapi *weatherapi.WeatherAPI
 }
 
-func NewHandler(services *services.Service) *Handler {
-	return &Handler{services: services}
+func NewHandler(services *services.Service, weatherapi *weatherapi.WeatherAPI) *Handler {
+	return &Handler{services: services, weatherapi: weatherapi}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
@@ -35,10 +37,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			// lists.DELETE("/:id", h.deleteList)
 
 		}
-		// weather := api.Group("/weather")
-		// {
-		// 	weather.GET("/", h.GetWeather)
-		// }
+		weather := api.Group("/weather")
+		{
+			weather.POST("/", h.GetWeather)
+		}
 
 	}
 	return router

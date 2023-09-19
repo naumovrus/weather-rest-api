@@ -9,11 +9,16 @@ import (
 	"github.com/naumovrus/weather-api/internal/config"
 	handler "github.com/naumovrus/weather-api/internal/handlers"
 	httpserver "github.com/naumovrus/weather-api/internal/http-server"
+	weatherapi "github.com/naumovrus/weather-api/internal/pkg/weather_api"
 	"github.com/naumovrus/weather-api/internal/repository"
 	"github.com/naumovrus/weather-api/internal/services"
 	"github.com/sirupsen/logrus"
 
 	"golang.org/x/exp/slog"
+)
+
+var (
+	ApiKey = os.Getenv("OPEN_WEATHER_MAP_API")
 )
 
 func main() {
@@ -23,8 +28,7 @@ func main() {
 	}
 	cfg := config.LoadConfig()
 	// logger := initLogger()
-	// apiKey := os.Getenv("OPEN_WEATHER_MAP_API")
-
+	apiKey := os.Getenv("OMW_API")
 	//init db
 
 	db, err := repository.NewPostgresDB(repository.Config{
@@ -39,9 +43,10 @@ func main() {
 		logrus.Fatalf("unabled to initialize db: %s", err.Error())
 	}
 
+	weatapi := weatherapi.NewWeatherApi(&apiKey)
 	repos := repository.NewRepository(db)
 	services := services.NewService(repos)
-	handlers := handler.NewHandler(services)
+	handlers := handler.NewHandler(services, weatapi)
 	srv := new(httpserver.Server)
 
 	if err := srv.Run("8080", handlers.InitRoutes()); err != nil {

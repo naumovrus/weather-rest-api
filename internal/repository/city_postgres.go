@@ -73,3 +73,9 @@ func (r *CityPostgres) GetUsersCity(userId int) ([]ent.City, error) {
 	err := r.db.Select(&cityies, query, userId)
 	return cityies, err
 }
+
+func (r *CityPostgres) DeleteCity(userId int, cityId int) error {
+	query := fmt.Sprintf(`DELETE FROM %s uc WHERE user_id = $1 AND city_id = $2`, usersCityTable)
+	_, err := r.db.Exec(query, userId, cityId)
+	return err
+}
