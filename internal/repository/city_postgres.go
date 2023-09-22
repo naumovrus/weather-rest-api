@@ -53,7 +53,7 @@ func (r *CityPostgres) AddCity(userId int, city ent.City) (int, error) {
 
 func (r *CityPostgres) GetByName(name string) (ent.City, error) {
 	var city ent.City
-	query := fmt.Sprintf("SELECT id FROM %s WHERE name=$1", usersTable)
+	query := fmt.Sprintf("SELECT id FROM %s WHERE name=$1", cityiesTable)
 	err := r.db.Get(&city, query, name)
 	return city, err
 }

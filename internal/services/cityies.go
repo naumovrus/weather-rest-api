@@ -25,4 +25,8 @@ func (s *CitiesSerice) GetUsersCity(userId int) ([]ent.City, error) {
 	return s.repo.GetUsersCity(userId)
 }
 
+func (s *CitiesSerice) GetByName(name string) (ent.City, error) {
+	return s.repo.GetByName(name)
+}
+
 // func (s *CitiesSerice) Delete()

@@ -15,6 +15,7 @@ type Cities interface {
 	AddCity(userId int, city ent.City) (int, error)
 	GetUsersCity(userId int) ([]ent.City, error)
 	GetAll() ([]ent.City, error)
+	GetByName(name string) (ent.City, error)
 	// Delete(userId int, cityId int) error
 }
 

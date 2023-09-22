@@ -12,6 +12,7 @@ type Authorization interface {
 }
 
 type Cities interface {
+	GetByName(name string) (ent.City, error)
 	AddCity(userId int, city ent.City) (int, error)
 	GetUsersCity(userId int) ([]ent.City, error)
 	GetAll() ([]ent.City, error)

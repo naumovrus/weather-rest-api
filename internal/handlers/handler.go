@@ -33,9 +33,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			cityies.GET("/", h.getUsersCity)
 			// cityies.GET("/:name", h.getCityByName)
 
-			// lists.PUT("/:id", h.updateList)
-			// lists.DELETE("/:id", h.deleteList)
-
 		}
 		weather := api.Group("/weather")
 		{

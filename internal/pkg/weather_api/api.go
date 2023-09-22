@@ -16,18 +16,17 @@ func NewWeatherApi(apiKey *string) *WeatherAPI {
 }
 
 // Посмотреть по аналогии с имплиметацией методов сервиса
-func (w *WeatherAPI) GetWeather(city entities.City) (*float64, error) {
+func (w *WeatherAPI) GetWeather(city entities.City) (entities.Weather, error) {
 	apiKey := w.ApiKey
+	var weather entities.Weather
 	request, err := openweathermap.NewCurrent("C", "ru", *apiKey)
 	if err != nil {
-		return nil, err
+		return weather, err
 	}
-
 	request.CurrentByName(city.Name)
-	// var weather entities.Weather
 	// cityId := city.Id
 	temp := &request.Main.Temp
+	weather.Temp = temp
 	// weather.CityId = cityId
-	// weather.Temp = *temp
-	return temp, nil
+	return weather, nil
 }

@@ -17,6 +17,7 @@ func NewWeatherPostgres(db *sqlx.DB) *WeatherPostgres {
 	return &WeatherPostgres{db: db}
 }
 
+// implement add cityId and temp in one row, add timestamp for cache
 func (r *WeatherPostgres) AddWeather(cityId int, weather ent.Weather) (int, error) {
 	// query := fmt.Sprintf("INSERT INTO %s (city_id, temp) VALUES ($1, $2) RETURNING id", weatherTable)
 	return 0, nil
